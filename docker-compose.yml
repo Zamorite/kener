@@ -29,7 +29,6 @@ services:
   # ---------------------------------------------------------------------------
   kener:
     image: rajnandan1/kener:latest
-    # For Alpine variant use: rajnandan1/kener:alpine
     container_name: kener
     environment:
       - TZ=${TZ}
@@ -39,26 +38,7 @@ services:
       - ORIGIN=${ORIGIN}
       - RESEND_API_KEY=${RESEND_API_KEY} # 🔐 API key
       - RESEND_SENDER_EMAIL=${RESEND_SENDER_EMAIL}
-
-      # ── Database (default: SQLite) ──
-      - DATABASE_URL: ${DATABASE_URL}
-      # DATABASE_URL: postgresql://user:password@postgres:5432/kener
-      # DATABASE_URL: mysql://user:password@mysql:3306/kener
-
-      # ── Email (optional) ──
-      # RESEND_API_KEY:
-      # RESEND_SENDER_EMAIL:
-      # SMTP_HOST:
-      # SMTP_PORT:
-      # SMTP_USER:
-      # SMTP_PASSWORD:
-      # SMTP_SENDER:
-      # SMTP_SECURE: 0
-
-      # ── Advanced (you likely don't need to change these) ──
-      # PORT: 3000
-      # KENER_BASE_PATH:
-      # NODE_ENV: production          # already set in the image
+      - DATABASE_URL=${DATABASE_URL}
     ports:
       - "3000:3000"
     volumes:
@@ -68,52 +48,8 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  # ---------------------------------------------------------------------------
-  # Optional: PostgreSQL (uncomment and set DATABASE_URL above)
-  # ---------------------------------------------------------------------------
-
-  # postgres:
-  #   image: postgres:alpine
-  #   container_name: kener-postgres
-  #   environment:
-  #     - POSTGRES_USER=${POSTGRES_USER}
-  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # 🔐 DB password
-  #     - POSTGRES_DB=${POSTGRES_DB}
-  #   restart: unless-stopped
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U kener"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-
-  # ---------------------------------------------------------------------------
-  # Optional: MySQL / MariaDB (uncomment and set DATABASE_URL above)
-  # ---------------------------------------------------------------------------
-  # mysql:
-  #   image: mariadb:11
-  #   container_name: kener-mysql
-  #   environment:
-  #     MYSQL_USER: kener
-  #     MYSQL_PASSWORD: change_me            # use a strong password
-  #     MYSQL_DATABASE: kener
-  #     MYSQL_RANDOM_ROOT_PASSWORD: "true"
-  #   volumes:
-  #     - mysql_data:/var/lib/mysql
-  #   restart: unless-stopped
-  #   healthcheck:
-  #     test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-
 volumes:
   data:
     name: kener_db
   redis_data:
     name: kener_redis
-  # postgres_data:
-  #   name: kener_postgres
-  # mysql_data:
-  #   name: kener_mysql
