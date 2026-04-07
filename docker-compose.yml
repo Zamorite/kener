@@ -32,6 +32,7 @@ services:
     container_name: kener
     environment:
       - TZ=${TZ}
+      - REDIS_URL=${REDIS_URL}
       - KENER_SECRET_KEY=${KENER_SECRET_KEY} # 🔐 API key / secret
       - DATABASE_URL=${DATABASE_URL}
       - KENER_BASE_PATH=${KENER_BASE_PATH}
