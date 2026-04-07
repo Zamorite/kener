@@ -31,14 +31,14 @@ services:
     image: rajnandan1/kener:latest
     container_name: kener
     environment:
-      - TZ=${TZ}
-      - KENER_SECRET_KEY=${KENER_SECRET_KEY} # 🔐 API key / secret
-      - DATABASE_URL=${DATABASE_URL}
-      - KENER_BASE_PATH=${KENER_BASE_PATH}
-      - ORIGIN=${ORIGIN}
-      - RESEND_API_KEY=${RESEND_API_KEY} # 🔐 API key
-      - RESEND_SENDER_EMAIL=${RESEND_SENDER_EMAIL}
-      - DATABASE_URL=${DATABASE_URL}
+      - TZ: ${TZ}
+      - KENER_SECRET_KEY: ${KENER_SECRET_KEY} # 🔐 API key / secret
+      - DATABASE_URL: ${DATABASE_URL}
+      - KENER_BASE_PATH: ${KENER_BASE_PATH}
+      - ORIGIN: ${ORIGIN}
+      - RESEND_API_KEY: ${RESEND_API_KEY} # 🔐 API key
+      - RESEND_SENDER_EMAIL: ${RESEND_SENDER_EMAIL}
+      - DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3000:3000"
     volumes:
